@@ -1,0 +1,49 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "illusory0x0/fmt"
+
+import(
+  "moonbitlang/core/bytes"
+)
+
+// Values
+fn write(ArrayView[Byte], Bytes, Array[&Format]) -> ArrayView[Byte] raise
+
+// Errors
+type DebugError
+impl Show for DebugError
+
+// Types and methods
+pub(all) struct BigEndian[T](T)
+fn[T] BigEndian::inner(Self[T]) -> T
+impl[T : BigEndianFormat] Format for BigEndian[T]
+
+pub(all) struct LittleEndian[T](T)
+fn[T] LittleEndian::inner(Self[T]) -> T
+impl[T : LittleEndianFormat] Format for LittleEndian[T]
+
+// Type aliases
+
+// Traits
+pub(open) trait BigEndianFormat {
+  write(Self, ArrayView[Byte]) -> Int
+  count(Self) -> Int
+}
+impl BigEndianFormat for Int
+impl BigEndianFormat for UInt
+
+pub(open) trait Format {
+  write(Self, ArrayView[Byte]) -> Int
+  count(Self) -> Int
+}
+impl Format for Int
+impl Format for UInt
+impl Format for Double
+impl Format for @bytes.View
+
+pub(open) trait LittleEndianFormat {
+  write(Self, ArrayView[Byte]) -> Int
+  count(Self) -> Int
+}
+impl LittleEndianFormat for Int
+impl LittleEndianFormat for UInt
+

@@ -1,6 +1,9 @@
 {
-  "name": "username/hello",
+  "name": "illusory0x0/fmt",
   "version": "0.1.0",
+  "deps": {
+    "illusory0x0/ryu": "0.1.1"
+  },
   "readme": "README.md",
   "repository": "",
   "license": "Apache-2.0",

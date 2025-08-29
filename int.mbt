@@ -1,0 +1,42 @@
+//|
+
+///|
+pub impl Format for Int with write(value, buffer) {
+  if value >= 0 {
+    let value = value.reinterpret_as_uint()
+    Format::write(value, buffer)
+  } else {
+    let value = (-value).reinterpret_as_uint()
+    buffer[0] = '-'
+    Format::write(value, buffer[1:]) + 1
+  }
+}
+
+///|
+/// 
+/// TODO
+pub impl Format for Int with count(self) -> Int {
+  50
+}
+
+///|
+pub impl LittleEndianFormat for Int with write(value, buffer) {
+  LittleEndianFormat::write(value.reinterpret_as_uint(), buffer)
+}
+
+///|
+/// supremum
+pub impl LittleEndianFormat for Int with count(self) -> Int {
+  4
+}
+
+///|
+pub impl BigEndianFormat for Int with write(value, buffer) {
+  BigEndianFormat::write(value.reinterpret_as_uint(), buffer)
+}
+
+///|
+/// supremum
+pub impl BigEndianFormat for Int with count(self) -> Int {
+  4
+}
