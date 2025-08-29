@@ -68,24 +68,24 @@ pub fn write(
         data.fold(init=0, (acc, x) => acc + x.count())
       guard upper_bound_count < buffer.length() else { fail("out of bound") }
       let mut offset = 0
-      let mut totol_offset = 0
+      let mut total_offset = 0
       for b in prefix {
         buffer[offset] = b
         offset += 1
       }
-      totol_offset += offset
+      total_offset += offset
       let mut buf = buffer[offset:]
       for i = 0, j = 0
           i < data.length() && j < snippets.length()
           i = i + 1, j = j + 1 {
         let offset = data[i].write(buf)
-        totol_offset += offset
+        total_offset += offset
         buf = buf[offset:]
         let offset = Format::write(snippets[j], buf)
-        totol_offset += offset
+        total_offset += offset
         buf = buf[offset:]
       }
-      buffer[0:totol_offset]
+      buffer[0:total_offset]
     }
   }
 }
