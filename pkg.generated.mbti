@@ -6,7 +6,7 @@ import(
 )
 
 // Values
-fn write(ArrayView[Byte], Bytes, Array[&Format]) -> ArrayView[Byte] raise
+fn write(ArrayView[Byte], Bytes, Array[&Format]) -> Int raise
 
 // Errors
 type DebugError

@@ -12,7 +12,8 @@ This library implements a destination passing style API where you provide a buff
 test "basic formatting" {
   let buffer = Array::make(1024, Byte::default())
   fn str(fmt : Bytes, data : Array[&Format]) -> String raise {
-    @fmt.write(buffer, fmt, data) |> ascii_bytes_to_string_helper
+    let offset = @fmt.write(buffer, fmt, data) 
+    ascii_bytes_to_string_helper(buffer[0:offset])
   }
 
   inspect(try? str(b"hello {} world", [123]), content="Ok(\"hello 123 world\")")
@@ -139,7 +140,8 @@ The library provides formatting support for:
 test "string interpolation" {
   let buffer = Array::make(1024, Byte::default())
   fn str(fmt : Bytes, data : Array[&Format]) -> String raise {
-    @fmt.write(buffer, fmt, data) |> ascii_bytes_to_string_helper
+    let offset = @fmt.write(buffer, fmt, data) 
+    ascii_bytes_to_string_helper(buffer[0:offset])
   }
 
   inspect(
@@ -194,7 +196,8 @@ test {
   let point = Point:: { x: 1, y: 2 };
   let buffer = Array::make(1024, Byte::default());
   fn str(fmt : Bytes, data : Array[&Format]) -> String raise {
-    @fmt.write(buffer, fmt, data) |> ascii_bytes_to_string_helper
+    let offset = @fmt.write(buffer, fmt, data) 
+    ascii_bytes_to_string_helper(buffer[0:offset])
   }
   inspect(try? str("{}",[point]), content=(#|Ok("(2,1)")
   ))

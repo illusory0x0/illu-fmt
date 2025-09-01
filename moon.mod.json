@@ -1,6 +1,6 @@
 {
   "name": "illusory0x0/fmt",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "deps": {
     "illusory0x0/ryu": "0.1.1"
   },

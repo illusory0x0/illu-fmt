@@ -45,7 +45,7 @@ pub fn write(
   buffer : ArrayView[Byte],
   format : Bytes,
   data : Array[&Format],
-) -> ArrayView[Byte] raise {
+) -> Int raise {
   match find_first_placeholder(format) {
     None => {
       guard format.length() <= buffer.length() else { fail("out of bound") }
@@ -55,7 +55,7 @@ pub fn write(
       for i in 0..<format.length() {
         buffer[i] = format[i]
       }
-      buffer[0:format.length()]
+      format.length()
     }
     Some(offset) => {
       let prefix = format[0:offset]
@@ -85,7 +85,7 @@ pub fn write(
         total_offset += offset
         buf = buf[offset:]
       }
-      buffer[0:total_offset]
+      total_offset
     }
   }
 }
@@ -106,7 +106,8 @@ suberror DebugError String derive(Show)
 test {
   let buffer = Array::make(1024, Byte::default())
   fn str(fmt : Bytes, data : Array[&Format]) -> String raise {
-    write(buffer, fmt, data) |> arrayview_byte_to_string
+    let offset = write(buffer, fmt, data)
+    arrayview_byte_to_string(buffer[0:offset])
   }
 
   inspect(
