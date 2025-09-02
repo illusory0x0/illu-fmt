@@ -36,10 +36,7 @@ test {
   let num : UInt = 123456789
   let buf = @buffer.new(size_hint=100)
   write_uint_text(num, buf)
-  inspect(
-    buf.to_bytes() |> ascii_bytes_to_string,
-    content="\u{1}\u{2}\u{3}\u{4}\u{5}\u{6}\u{7}\u{8}\u{9}",
-  )
+  inspect(buf.to_bytes() |> ascii_bytes_to_string, content="123456789")
 }
 
 ///|
