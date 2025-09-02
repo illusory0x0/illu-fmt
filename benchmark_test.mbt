@@ -23,15 +23,23 @@ test {
 ///|
 fn write_uint_text(num : UInt, buffer : @buffer.T) -> Unit {
   let mut value = num
-  let temp = []
-  while value > 0 {
-    let rem = value % 10
-    temp.push(upper_digit_table[rem.reinterpret_as_int()])
-    value /= 10
+  let temp = FixedArray::make(10, b'\x00')
+  for i = 9, value = num; i >= 0 && value > 0; i = i - 1, value = value / 10 {
+    temp[i] = upper_digit_table[(value % 10).reinterpret_as_int()]
+  } else {
+    buffer.write_bytesview(temp.unsafe_reinterpret_as_bytes()[i + 1:])
   }
-  for x in temp.rev_iter() {
-    buffer.write_byte(x)
-  }
+}
+
+///|
+test {
+  let num : UInt = 123456789
+  let buf = @buffer.new(size_hint=100)
+  write_uint_text(num, buf)
+  inspect(
+    buf.to_bytes() |> ascii_bytes_to_string,
+    content="\u{1}\u{2}\u{3}\u{4}\u{5}\u{6}\u{7}\u{8}\u{9}",
+  )
 }
 
 ///|
