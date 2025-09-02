@@ -41,9 +41,11 @@ pub(open) trait Format {
   write(Self, Memory, Int) -> Int
   count(Self) -> Int
 }
+impl Format for Byte
 impl Format for Int
 impl Format for UInt
 impl Format for Double
+impl[A : Format] Format for Iter[A]
 impl Format for @bytes.View
 
 pub(open) trait LittleEndianFormat {

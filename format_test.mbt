@@ -68,6 +68,7 @@ test "Int" {
   )
 }
 
+///|
 test "Iter[Int]" {
   let buffer = Memory::make(1024, Byte::default())
   let offset = Format::write([1, 2, 3].iter(), buffer, 0)
