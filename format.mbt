@@ -84,15 +84,6 @@ pub fn write(
   }
 }
 
-// ///|
-// fn arrayview_byte_to_string(avb : ArrayView[Byte]) -> String {
-//   let buf = StringBuilder::new()
-//   for b in avb {
-//     buf.write_char(b.to_char())
-//   }
-//   buf.to_string()
-// }
-
 ///|
 suberror DebugError String derive(Show)
 

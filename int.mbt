@@ -1,5 +1,3 @@
-//|
-
 ///|
 pub impl Format for Int with write(value, buffer, offset) {
   if value >= 0 {

@@ -12,8 +12,3 @@ pub fn Memory::length(self : Memory) -> Int = "%fixedarray.length"
 
 ///|
 pub fn Memory::make(len : Int, init : Byte) -> Memory = "%fixedarray.make"
-
-///|
-test {
-  // let xs = FixedArray::make
-}
