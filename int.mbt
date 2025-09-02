@@ -11,10 +11,9 @@ pub impl Format for Int with write(value, buffer, offset) {
 }
 
 ///|
-/// 
-/// TODO
+/// supremum
 pub impl Format for Int with count(self) -> Int {
-  50
+  12
 }
 
 ///|

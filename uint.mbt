@@ -31,9 +31,9 @@ pub impl Format for UInt with write(value, buffer, offset) {
 }
 
 ///|
-/// TODO
+/// supremum
 pub impl Format for UInt with count(self) -> Int {
-  50
+  11
 }
 
 ///|
