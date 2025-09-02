@@ -6,7 +6,7 @@ import(
 )
 
 // Values
-fn write(ArrayView[Byte], Bytes, Array[&Format]) -> Int raise
+fn write(Bytes, Memory, Int, Array[&Format]) -> Int raise
 
 // Errors
 type DebugError
@@ -21,18 +21,24 @@ pub(all) struct LittleEndian[T](T)
 fn[T] LittleEndian::inner(Self[T]) -> T
 impl[T : LittleEndianFormat] Format for LittleEndian[T]
 
+type Memory
+fn Memory::length(Self) -> Int
+fn Memory::make(Int, Byte) -> Self
+fn Memory::op_get(Self, Int) -> Byte
+fn Memory::op_set(Self, Int, Byte) -> Unit
+
 // Type aliases
 
 // Traits
 pub(open) trait BigEndianFormat {
-  write(Self, ArrayView[Byte]) -> Int
+  write(Self, Memory, Int) -> Int
   count(Self) -> Int
 }
 impl BigEndianFormat for Int
 impl BigEndianFormat for UInt
 
 pub(open) trait Format {
-  write(Self, ArrayView[Byte]) -> Int
+  write(Self, Memory, Int) -> Int
   count(Self) -> Int
 }
 impl Format for Int
@@ -41,7 +47,7 @@ impl Format for Double
 impl Format for @bytes.View
 
 pub(open) trait LittleEndianFormat {
-  write(Self, ArrayView[Byte]) -> Int
+  write(Self, Memory, Int) -> Int
   count(Self) -> Int
 }
 impl LittleEndianFormat for Int

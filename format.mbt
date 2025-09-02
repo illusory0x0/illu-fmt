@@ -2,10 +2,9 @@
 /// if contract is violated, behavior is undefined
 pub(open) trait Format {
   /// The number of bytes written must not exceed count().
-  write(Self, ArrayView[Byte]) -> Int
-
+  write(value : Self, buffer : Memory, offset : Int) -> Int
   /// Upper bound on the number of bytes written
-  count(Self) -> Int
+  count(value : Self) -> Int
 }
 
 ///|
@@ -42,8 +41,9 @@ fn split_format(format : @bytes.View) -> (Array[@bytes.View], Int) {
 
 ///|
 pub fn write(
-  buffer : ArrayView[Byte],
   format : Bytes,
+  buffer : Memory,
+  offset : Int,
   data : Array[&Format],
 ) -> Int raise {
   match find_first_placeholder(format) {
@@ -68,46 +68,49 @@ pub fn write(
         data.fold(init=0, (acc, x) => acc + x.count())
       guard upper_bound_count < buffer.length() else { fail("out of bound") }
       let mut offset = 0
-      let mut total_offset = 0
       for b in prefix {
         buffer[offset] = b
         offset += 1
       }
-      total_offset += offset
-      let mut buf = buffer[offset:]
-      for i = 0, j = 0
-          i < data.length() && j < snippets.length()
-          i = i + 1, j = j + 1 {
-        let offset = data[i].write(buf)
-        total_offset += offset
-        buf = buf[offset:]
-        let offset = Format::write(snippets[j], buf)
-        total_offset += offset
-        buf = buf[offset:]
+      guard data.length() == snippets.length() else {
+        raise DebugError("internal error")
       }
-      total_offset
+      for i in 0..<data.length() {
+        offset += Format::write(data[i], buffer, offset)
+        offset += Format::write(snippets[i], buffer, offset)
+      }
+      offset
     }
   }
 }
 
-///|
-fn arrayview_byte_to_string(avb : ArrayView[Byte]) -> String {
-  let buf = StringBuilder::new()
-  for b in avb {
-    buf.write_char(b.to_char())
-  }
-  buf.to_string()
-}
+// ///|
+// fn arrayview_byte_to_string(avb : ArrayView[Byte]) -> String {
+//   let buf = StringBuilder::new()
+//   for b in avb {
+//     buf.write_char(b.to_char())
+//   }
+//   buf.to_string()
+// }
 
 ///|
 suberror DebugError String derive(Show)
 
 ///|
+fn memory_to_string(memory : Memory, end : Int) -> String {
+  let buf = StringBuilder::new()
+  for i in 0..<end {
+    buf.write_char(memory[i].to_char())
+  }
+  buf.to_string()
+}
+
+///|
 test {
-  let buffer = Array::make(1024, Byte::default())
+  let buffer = Memory::make(1024, Byte::default())
   fn str(fmt : Bytes, data : Array[&Format]) -> String raise {
-    let offset = write(buffer, fmt, data)
-    arrayview_byte_to_string(buffer[0:offset])
+    let offset = write(fmt, buffer, 0, data)
+    memory_to_string(buffer, offset)
   }
 
   inspect(

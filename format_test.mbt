@@ -1,62 +1,69 @@
 ///|
+fn memory_to_string(memory : Memory, end : Int) -> String {
+  let buf = StringBuilder::new()
+  for i in 0..<end {
+    buf.write_char(memory[i].to_char())
+  }
+  buf.to_string()
+}
+
+///|
+fn bytes_of_memory(memory : Memory) -> Bytes = "%identity"
+
+///|
+fn bytes_view_of_memory(memory : Memory, start : Int, end : Int) -> @bytes.View {
+  bytes_of_memory(memory)[start:end]
+}
+
+///|
 test "Double" {
-  let buffer = Array::make(1024, Byte::default())
-  let b = buffer[:]
-  let value = 3.14
-  inspect(to_string(b, value), content="3.14")
+  let buffer = Memory::make(1024, Byte::default())
+  let offset = Format::write(3.14, buffer, 0)
+  inspect(memory_to_string(buffer, offset), content="3.14")
 }
 
 ///|
 test "UInt" {
-  let value : UInt = 0xAABBCCEE
-  let buffer = Array::make(1024, Byte::default())
-  let b = buffer[:]
-  let v0 = value
-  let v1 = @fmt.BigEndian(v0)
-  let v2 = @fmt.LittleEndian(value)
-  inspect(value, content="2864434414")
-  inspect(ascii_bytes_to_string(to_bytes(b, v0)), content="2864434414")
+  let buffer = Memory::make(1024, Byte::default())
+  let offset = Format::write(0xAABBCCEEU, buffer, 0)
+  inspect(memory_to_string(buffer, offset), content="2864434414")
+  let offset = Format::write(@fmt.LittleEndian(0xAABBCCEEU), buffer, 0)
   inspect(
-    to_bytes(b, v1),
-    content=(
-      #|b"\xaa\xbb\xcc\xee"
-    ),
-  )
-  inspect(
-    to_bytes(b, v2),
+    bytes_view_of_memory(buffer, 0, offset),
     content=(
       #|b"\xee\xcc\xbb\xaa"
     ),
   )
-  inspect(ascii_bytes_to_string(to_bytes(b, 123456789U)), content="123456789")
-  inspect(ascii_bytes_to_string(to_bytes(b, 12345678U)), content="12345678")
+  let offset = Format::write(@fmt.BigEndian(0xAABBCCEEU), buffer, 0)
+  inspect(
+    bytes_view_of_memory(buffer, 0, offset),
+    content=(
+      #|b"\xaa\xbb\xcc\xee"
+    ),
+  )
 }
 
 ///|
 test "Int" {
-  let value : Int = 0xAABBCCEE
-  let buffer = Array::make(1024, Byte::default())
-  let b = buffer[:]
-  let v0 = value
-  let v1 = @fmt.BigEndian(v0)
-  let v2 = @fmt.LittleEndian(value)
-  inspect(value, content="-1430532882")
-  inspect(ascii_bytes_to_string(to_bytes(b, v0)), content="-1430532882")
+  let buffer = Memory::make(1024, Byte::default())
+  let offset = Format::write(123456789, buffer, 0)
+  inspect(memory_to_string(buffer, offset), content="123456789")
+  let offset = Format::write(-123456789, buffer, 0)
+  inspect(memory_to_string(buffer, offset), content="-123456789")
+  let offset = Format::write(0xAABBCCEE, buffer, 0)
+  inspect(memory_to_string(buffer, offset), content="-1430532882")
+  let offset = Format::write(@fmt.LittleEndian(0xAABBCCEE), buffer, 0)
   inspect(
-    to_bytes(b, v1),
-    content=(
-      #|b"\xaa\xbb\xcc\xee"
-    ),
-  )
-  inspect(
-    to_bytes(b, v2),
+    bytes_view_of_memory(buffer, 0, offset),
     content=(
       #|b"\xee\xcc\xbb\xaa"
     ),
   )
-  inspect(ascii_bytes_to_string(to_bytes(b, 123456789U)), content="123456789")
-  inspect(ascii_bytes_to_string(to_bytes(b, 12345678U)), content="12345678")
-  // test trait object
-  let v : &Format = 0
-  inspect(ascii_bytes_to_string(to_bytes(b, v)), content="0")
+  let offset = Format::write(@fmt.BigEndian(0xAABBCCEE), buffer, 0)
+  inspect(
+    bytes_view_of_memory(buffer, 0, offset),
+    content=(
+      #|b"\xaa\xbb\xcc\xee"
+    ),
+  )
 }

@@ -1,7 +1,7 @@
 ///|
-pub impl Format for @bytes.View with write(value, buffer) {
+pub impl Format for @bytes.View with write(value, buffer, offset) {
   for i in 0..<value.length() {
-    buffer[i] = value[i]
+    buffer[offset + i] = value[i]
   }
   value.length()
 }
