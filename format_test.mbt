@@ -92,22 +92,22 @@ test "format_write" {
   let buffer = Memory::make(1024, b'%')
   fn str(fmt : Bytes, data : Array[&Format]) -> String raise {
     let offset = format_write(fmt, data, buffer, 1)
-    memory_to_string(buffer, offset)
+    memory_to_string(buffer, offset + 2)
   }
 
-  inspect(try! str(b"hello {} world", [123]), content="%hello 123 worl")
-  inspect(try! str(b"{}{}", [1, 2]), content="%1")
-  inspect(try! str(b"={}={}=", [1, 2]), content="%=1=2")
-  inspect(try! str(b"={}={}", [1, 2]), content="%=1=")
-  inspect(try! str(b"{}={}", [1, 2]), content="%1=")
-  inspect(try! str(b"{}%%", [@fmt.BigEndian(0x80818283)]), content="%%")
+  inspect(try! str(b"hello {} world", [123]), content="%hello 123 world%")
+  inspect(try! str(b"{}{}", [1, 2]), content="%12l")
+  inspect(try! str(b"={}={}=", [1, 2]), content="%=1=2= ")
+  inspect(try! str(b"={}={}", [1, 2]), content="%=1=2=")
+  inspect(try! str(b"{}={}", [1, 2]), content="%1=22")
+  inspect(try! str(b"{}", [@fmt.BigEndian(0x80818283)]), content="%=")
 }
 
 ///|
 test "format_write format dsl error" {
   let buffer = Memory::make(1024, b'%')
   fn str(fmt : Bytes, data : Array[&Format]) -> String raise {
-    let offset = format_write(fmt, data, buffer, 1)
+    let offset = format_write(fmt, data, buffer, 0)
     memory_to_string(buffer, offset)
   }
 
