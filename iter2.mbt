@@ -12,7 +12,7 @@ pub impl[A : Format, B : Format] Format for Iter2[A, B] with write(
     offset += Format::write(b',', buffer, offset)
     offset += Format::write(y, buffer, offset)
     offset += Format::write(b')', buffer, offset)
-    // delimeter for pairs
+    // delimiter for pairs
     offset += Format::write(b',', buffer, offset)
   }
   // overwrite last ',' with ']'
