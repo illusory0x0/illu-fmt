@@ -49,6 +49,7 @@ impl Format for Bytes
 impl[A : Format] Format for Iter[A]
 impl[A : Format, B : Format] Format for Iter2[A, B]
 impl Format for @bytes.View
+impl[A : Format, B : Format] Format for (A, B)
 
 pub(open) trait LittleEndianFormat {
   write(Self, Memory, Int) -> Int
