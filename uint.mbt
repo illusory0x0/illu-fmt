@@ -12,14 +12,13 @@ fn reverse(xs : Memory, start : Int, end : Int) -> Unit {
 }
 
 ///|
-pub impl Format for UInt with write(value, buffer, offset) {
+pub impl Format for UInt with write(value, buffer, start) {
   if value == 0 {
-    buffer[offset + 0] = '0'
+    buffer[start + 0] = '0'
     return 1
   }
-  let start = offset
   let mut value = value
-  let mut offset = offset
+  let mut offset = start
   while value > 0 {
     let rem = value % 10
     buffer[offset] = upper_digit_table[rem.reinterpret_as_int()]
@@ -37,15 +36,15 @@ pub impl Format for UInt with count(self) -> Int {
 }
 
 ///|
-pub impl LittleEndianFormat for UInt with write(value, buffer, offset) {
+pub impl LittleEndianFormat for UInt with write(value, buffer, start) {
   let b0 = (value & 0xFF).to_byte()
   let b1 = ((value >> 8) & 0xFF).to_byte()
   let b2 = ((value >> 16) & 0xFF).to_byte()
   let b3 = ((value >> 24) & 0xFF).to_byte()
-  buffer[offset + 0] = b0
-  buffer[offset + 1] = b1
-  buffer[offset + 2] = b2
-  buffer[offset + 3] = b3
+  buffer[start + 0] = b0
+  buffer[start + 1] = b1
+  buffer[start + 2] = b2
+  buffer[start + 3] = b3
   4
 }
 
@@ -56,15 +55,15 @@ pub impl LittleEndianFormat for UInt with count(self) -> Int {
 }
 
 ///|
-pub impl BigEndianFormat for UInt with write(value, buffer, offset) {
+pub impl BigEndianFormat for UInt with write(value, buffer, start) {
   let b0 = ((value >> 24) & 0xFF).to_byte()
   let b1 = ((value >> 16) & 0xFF).to_byte()
   let b2 = ((value >> 8) & 0xFF).to_byte()
   let b3 = (value & 0xFF).to_byte()
-  buffer[offset + 0] = b0
-  buffer[offset + 1] = b1
-  buffer[offset + 2] = b2
-  buffer[offset + 3] = b3
+  buffer[start + 0] = b0
+  buffer[start + 1] = b1
+  buffer[start + 2] = b2
+  buffer[start + 3] = b3
   4
 }
 

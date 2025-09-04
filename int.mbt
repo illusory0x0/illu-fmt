@@ -1,12 +1,12 @@
 ///|
-pub impl Format for Int with write(value, buffer, offset) {
+pub impl Format for Int with write(value, buffer, start) {
   if value >= 0 {
     let value = value.reinterpret_as_uint()
-    Format::write(value, buffer, offset)
+    Format::write(value, buffer, start)
   } else {
     let value = (-value).reinterpret_as_uint()
-    buffer[offset] = '-'
-    Format::write(value, buffer, offset + 1) + 1
+    buffer[start] = '-'
+    Format::write(value, buffer, start + 1) + 1
   }
 }
 
@@ -17,8 +17,8 @@ pub impl Format for Int with count(self) -> Int {
 }
 
 ///|
-pub impl LittleEndianFormat for Int with write(value, buffer, offset) {
-  LittleEndianFormat::write(value.reinterpret_as_uint(), buffer, offset)
+pub impl LittleEndianFormat for Int with write(value, buffer, start) {
+  LittleEndianFormat::write(value.reinterpret_as_uint(), buffer, start)
 }
 
 ///|
@@ -28,8 +28,8 @@ pub impl LittleEndianFormat for Int with count(self) -> Int {
 }
 
 ///|
-pub impl BigEndianFormat for Int with write(value, buffer, offset) {
-  BigEndianFormat::write(value.reinterpret_as_uint(), buffer, offset)
+pub impl BigEndianFormat for Int with write(value, buffer, start) {
+  BigEndianFormat::write(value.reinterpret_as_uint(), buffer, start)
 }
 
 ///|

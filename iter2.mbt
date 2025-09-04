@@ -2,9 +2,9 @@
 pub impl[A : Format, B : Format] Format for Iter2[A, B] with write(
   value,
   buffer,
-  offset,
+  start,
 ) {
-  let mut offset = 0
+  let mut offset = start
   offset += Format::write(b'[', buffer, offset)
   for x, y in value {
     offset += Format::write(b'(', buffer, offset)
@@ -17,7 +17,7 @@ pub impl[A : Format, B : Format] Format for Iter2[A, B] with write(
   }
   // overwrite last ',' with ']'
   buffer[offset - 1] = b']'
-  offset
+  offset - start
 }
 
 ///|

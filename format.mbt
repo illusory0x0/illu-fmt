@@ -2,7 +2,7 @@
 /// if contract is violated, behavior is undefined
 pub(open) trait Format {
   /// The number of bytes written must not exceed count().
-  write(value : Self, buffer : Memory, offset : Int) -> Int
+  write(value : Self, buffer : Memory, start : Int) -> Int
   /// Upper bound on the number of bytes written
   count(value : Self) -> Int
 }
@@ -44,7 +44,7 @@ pub fn format_write(
   format : Bytes,
   data : Array[&Format],
   buffer : Memory,
-  offset : Int,
+  start : Int,
 ) -> Int raise {
   match find_first_placeholder(format) {
     None => {
@@ -57,9 +57,9 @@ pub fn format_write(
       }
       format.length()
     }
-    Some(offset) => {
-      let prefix = format[0:offset]
-      let rest = format[offset + 2:]
+    Some(prefix_fst_end) => {
+      let prefix = format[0:prefix_fst_end]
+      let rest = format[prefix_fst_end + 2:]
       let (snippets, count) = split_format(rest)
       guard data.length() == count else {
         raise DebugError("data.length() mismatch with placeholder's count")

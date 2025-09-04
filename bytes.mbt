@@ -1,7 +1,7 @@
 ///|
-pub impl Format for Bytes with write(value, buffer, offset) {
+pub impl Format for Bytes with write(value, buffer, start) {
   for i in 0..<value.length() {
-    buffer[offset + i] = value[i]
+    buffer[start + i] = value[i]
   }
   value.length()
 }

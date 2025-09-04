@@ -1,6 +1,6 @@
 ///|
-pub impl Format for Byte with write(value, buffer, offset) {
-  buffer[offset] = value
+pub impl Format for Byte with write(value, buffer, start) {
+  buffer[start] = value
   1
 }
 

@@ -505,12 +505,12 @@ fn d2d(ieeeMantissa : UInt64, ieeeExponent : UInt) -> FloatingDecimal64 {
 ///|
 fn write_floating_decimal64_to_memory(
   dst : Memory,
-  offset : Int,
+  start : Int,
   v : FloatingDecimal64,
   sign : Bool,
 ) -> Int {
   // Step 5: Print the decimal representation.
-  let mut index : Int = offset
+  let mut index : Int = start
   if sign {
     dst[index] = b'-'
     index += 1
@@ -606,7 +606,7 @@ fn write_floating_decimal64_to_memory(
     }
     index += olength + 1
   }
-  index - offset
+  index - start
 }
 
 ///|

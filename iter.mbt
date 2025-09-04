@@ -1,6 +1,6 @@
 ///|
-pub impl[A : Format] Format for Iter[A] with write(value, buffer, offset) {
-  let mut offset = 0
+pub impl[A : Format] Format for Iter[A] with write(value, buffer, start) {
+  let mut offset = start
   offset += Format::write(b'[', buffer, offset)
   for x in value {
     offset += Format::write(x, buffer, offset)
@@ -8,7 +8,7 @@ pub impl[A : Format] Format for Iter[A] with write(value, buffer, offset) {
   }
   // overwrite last ',' with ']'
   buffer[offset - 1] = b']'
-  offset
+  offset - start
 }
 
 ///|
