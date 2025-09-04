@@ -20,6 +20,8 @@ test "Double" {
   let buffer = Memory::make(1024, Byte::default())
   let offset = Format::write(3.14, buffer, 0)
   inspect(memory_to_string(buffer, offset), content="3.14")
+  let offset = Format::write(0.123456789, buffer, 0)
+  inspect(memory_to_string(buffer, offset), content="0.123456789")
 }
 
 ///|
