@@ -86,3 +86,41 @@ test "Iter2" {
   let offset = Format::write(map.iter2(), buffer, 0)
   inspect(memory_to_string(buffer, offset), content="[(pi,3.14),(e,2.71)]")
 }
+
+///|
+test "format_write" {
+  let buffer = Memory::make(1024, b'%')
+  fn str(fmt : Bytes, data : Array[&Format]) -> String raise {
+    let offset = format_write(fmt, data, buffer, 1)
+    memory_to_string(buffer, offset)
+  }
+
+  inspect(try! str(b"hello {} world", [123]), content="%hello 123 worl")
+  inspect(try! str(b"{}{}", [1, 2]), content="%1")
+  inspect(try! str(b"={}={}=", [1, 2]), content="%=1=2")
+  inspect(try! str(b"={}={}", [1, 2]), content="%=1=")
+  inspect(try! str(b"{}={}", [1, 2]), content="%1=")
+  inspect(try! str(b"{}%%", [@fmt.BigEndian(0x80818283)]), content="%%")
+}
+
+///|
+test "format_write format dsl error" {
+  let buffer = Memory::make(1024, b'%')
+  fn str(fmt : Bytes, data : Array[&Format]) -> String raise {
+    let offset = format_write(fmt, data, buffer, 1)
+    memory_to_string(buffer, offset)
+  }
+
+  inspect(
+    try? str(b"hello {} world", []),
+    content=(
+      #|Err(DebugError("data.length() mismatch with placeholder's count"))
+    ),
+  )
+  inspect(
+    try? str(b"hello {} world", [1, 2]),
+    content=(
+      #|Err(DebugError("data.length() mismatch with placeholder's count"))
+    ),
+  )
+}
