@@ -70,11 +70,8 @@ pub fn format_write(
       let upper_bound_count = snippets.fold(init=0, (acc, x) => acc + x.length()) +
         data.fold(init=0, (acc, x) => acc + x.count())
       guard upper_bound_count < buffer.length() else { fail("out of bound") }
-      let mut offset = 0
-      for b in prefix {
-        buffer[offset] = b
-        offset += 1
-      }
+      let mut offset = start
+      offset += Format::write(prefix, buffer, offset)
       guard data.length() == snippets.length() else {
         raise DebugError("internal error")
       }
@@ -82,7 +79,7 @@ pub fn format_write(
         offset += Format::write(data[i], buffer, offset)
         offset += Format::write(snippets[i], buffer, offset)
       }
-      offset
+      offset - start
     }
   }
 }
