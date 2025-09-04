@@ -6,7 +6,7 @@ import(
 )
 
 // Values
-fn write(Bytes, Memory, Int, Array[&Format]) -> Int raise
+fn format_write(Bytes, Array[&Format], Memory, Int) -> Int raise
 
 // Errors
 type DebugError

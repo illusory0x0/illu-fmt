@@ -42,9 +42,9 @@ fn split_format(format : @bytes.View) -> (Array[@bytes.View], Int) {
 ///|
 pub fn format_write(
   format : Bytes,
+  data : Array[&Format],
   buffer : Memory,
   offset : Int,
-  data : Array[&Format],
 ) -> Int raise {
   match find_first_placeholder(format) {
     None => {
@@ -100,7 +100,7 @@ fn memory_to_string(memory : Memory, end : Int) -> String {
 test {
   let buffer = Memory::make(1024, Byte::default())
   fn str(fmt : Bytes, data : Array[&Format]) -> String raise {
-    let offset = format_write(fmt, buffer, 0, data)
+    let offset = format_write(fmt, data, buffer, 0)
     memory_to_string(buffer, offset)
   }
 
