@@ -2,7 +2,11 @@
 pub(all) struct LittleEndian[T](T)
 
 ///|
+/// if contract is violated, behavior is undefined
 pub(open) trait LittleEndianFormat {
+  /// Write the `value` into `buffer` as the `start` position,
+  /// and return the number of bytes written.
+  ///
   /// The number of bytes written must not exceed count().
   write(value : Self, buffer : Memory, start : Int) -> Int
   /// Upper bound on the number of bytes written
