@@ -606,7 +606,7 @@ fn write_floating_decimal64_to_memory(
     }
     index += olength + 1
   }
-  index-offset
+  index - offset
 }
 
 ///|
