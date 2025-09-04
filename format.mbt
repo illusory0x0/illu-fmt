@@ -55,10 +55,7 @@ pub fn format_write(
       guard data.length() == 0 else {
         raise DebugError("data.length() mismatch with placeholder's count")
       }
-      for i in 0..<format.length() {
-        buffer[i] = format[i]
-      }
-      format.length()
+      Format::write(format, buffer, start)
     }
     Some(prefix_fst_end) => {
       let prefix = format[0:prefix_fst_end]
