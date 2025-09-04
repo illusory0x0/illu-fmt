@@ -1,0 +1,33 @@
+///|
+pub impl[A : Format, B : Format] Format for Iter2[A, B] with write(
+  value,
+  buffer,
+  offset,
+) {
+  let mut offset = 0
+  offset += Format::write(b'[', buffer, offset)
+  for x, y in value {
+    offset += Format::write(b'(', buffer, offset)
+    offset += Format::write(x, buffer, offset)
+    offset += Format::write(b',', buffer, offset)
+    offset += Format::write(y, buffer, offset)
+    offset += Format::write(b')', buffer, offset)
+    // delimeter for pairs
+    offset += Format::write(b',', buffer, offset)
+  }
+  // overwrite last ',' with ']'
+  buffer[offset - 1] = b']'
+  offset
+}
+
+///|
+/// supremum
+pub impl[A : Format, B : Format] Format for Iter2[A, B] with count(self) -> Int {
+  let mut supremum = 1 // for '['
+  for x, y in self {
+    // 4 for '(', ',', ')', ','
+    supremum += 4 + x.count() + y.count()
+  }
+  // overwrite last ',' with ']'
+  supremum
+}

@@ -45,7 +45,9 @@ impl Format for Byte
 impl Format for Int
 impl Format for UInt
 impl Format for Double
+impl Format for Bytes
 impl[A : Format] Format for Iter[A]
+impl[A : Format, B : Format] Format for Iter2[A, B]
 impl Format for @bytes.View
 
 pub(open) trait LittleEndianFormat {
