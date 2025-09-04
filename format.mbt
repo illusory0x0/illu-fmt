@@ -40,7 +40,7 @@ fn split_format(format : @bytes.View) -> (Array[@bytes.View], Int) {
 }
 
 ///|
-pub fn write(
+pub fn format_write(
   format : Bytes,
   buffer : Memory,
   offset : Int,
@@ -100,7 +100,7 @@ fn memory_to_string(memory : Memory, end : Int) -> String {
 test {
   let buffer = Memory::make(1024, Byte::default())
   fn str(fmt : Bytes, data : Array[&Format]) -> String raise {
-    let offset = write(fmt, buffer, 0, data)
+    let offset = format_write(fmt, buffer, 0, data)
     memory_to_string(buffer, offset)
   }
 
