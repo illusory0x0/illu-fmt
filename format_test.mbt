@@ -80,9 +80,9 @@ test "Iter" {
 }
 
 ///|
-test "Iter2[Bytes,Int]" {
+test "Iter2" {
   let buffer = Memory::make(1024, Byte::default())
-  let map : Map[Bytes, Int] = { "pi": 3, "e": 2 }
+  let map : Map[Bytes, Double] = { "pi": 3.14, "e": 2.71 }
   let offset = Format::write(map.iter2(), buffer, 0)
-  inspect(memory_to_string(buffer, offset), content="[(pi,3),(e,2)]")
+  inspect(memory_to_string(buffer, offset), content="[(pi,3.14),(e,2.71)]")
 }

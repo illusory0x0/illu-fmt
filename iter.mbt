@@ -14,5 +14,8 @@ pub impl[A : Format] Format for Iter[A] with write(value, buffer, offset) {
 ///|
 /// supremum
 pub impl[A : Format] Format for Iter[A] with count(self) -> Int {
-  self.fold(init=0, (acc, x) => acc + x.count() + 1) + 1
+  // init = 1 for '['
+  // +1 for each ','
+  // overwrite last ',' with ']'
+  self.fold(init=1, (acc, x) => acc + x.count() + 1)
 }
