@@ -1,9 +1,9 @@
 ///|
 test "paddint/Left" {
-  let buffer = @illusory0x0/fmt.Memory::make(1024, b'%')
-  fn str(data : &@illusory0x0/fmt.Format) -> String {
+  let buffer = @fmt.Memory::make(1024, b'%')
+  fn str(data : &@fmt.Format) -> String {
     fill_marker(buffer)
-    let count = @illusory0x0/fmt.Format::write(data, buffer, 1)
+    let count = @fmt.Format::write(data, buffer, 1)
     memory_to_string(buffer, count + 2)
   }
 
@@ -64,17 +64,15 @@ test "paddint/Left" {
 
   // Test count method for different scenarios
   inspect(
-    @illusory0x0/fmt.Format::count(@padding.Left(123, width=10, padding=b' ')),
+    @fmt.Format::count(@padding.Left(123, width=10, padding=b' ')),
     content="12",
   )
   inspect(
-    @illusory0x0/fmt.Format::count(
-      @padding.Left(123456789, width=5, padding=b' '),
-    ),
+    @fmt.Format::count(@padding.Left(123456789, width=5, padding=b' ')),
     content="12",
   )
   inspect(
-    @illusory0x0/fmt.Format::count(@padding.Left(12345, width=5, padding=b' ')),
+    @fmt.Format::count(@padding.Left(12345, width=5, padding=b' ')),
     content="12",
   )
 
@@ -93,10 +91,10 @@ test "paddint/Left" {
 
 ///|
 test "padding/right" {
-  let buffer = @illusory0x0/fmt.Memory::make(1024, b'%')
-  fn str(data : &@illusory0x0/fmt.Format) -> String {
+  let buffer = @fmt.Memory::make(1024, b'%')
+  fn str(data : &@fmt.Format) -> String {
     fill_marker(buffer)
-    let count = @illusory0x0/fmt.Format::write(data, buffer, 1)
+    let count = @fmt.Format::write(data, buffer, 1)
     memory_to_string(buffer, count + 2)
   }
 
@@ -163,17 +161,15 @@ test "padding/right" {
 
   // Test count method for different scenarios
   inspect(
-    @illusory0x0/fmt.Format::count(@padding.Right(123, width=10, padding=b' ')),
+    @fmt.Format::count(@padding.Right(123, width=10, padding=b' ')),
     content="12",
   )
   inspect(
-    @illusory0x0/fmt.Format::count(
-      @padding.Right(123456789, width=5, padding=b' '),
-    ),
+    @fmt.Format::count(@padding.Right(123456789, width=5, padding=b' ')),
     content="12",
   )
   inspect(
-    @illusory0x0/fmt.Format::count(@padding.Right(12345, width=5, padding=b' ')),
+    @fmt.Format::count(@padding.Right(12345, width=5, padding=b' ')),
     content="12",
   )
 
@@ -188,4 +184,114 @@ test "padding/right" {
 
   // Test with double precision numbers
   inspect(str(@padding.Right(1.5, width=6, padding=b'0')), content="%1.5000%")
+}
+
+///|
+test "padding/Center" {
+  let buffer = @fmt.Memory::make(1024, b'%')
+  fn str(data : &@fmt.Format) -> String {
+    fill_marker(buffer)
+    let count = @fmt.Format::write(data, buffer, 1)
+    memory_to_string(buffer, count + 2)
+  }
+
+  // Original test - basic center padding with space
+  inspect(
+    str(@padding.Center(123456789, width=10, padding=b' ')),
+    content="%123456789 %",
+  )
+
+  // Test with different padding characters
+  inspect(str(@padding.Center(42, width=5, padding=b'0')), content="%04200%")
+  inspect(
+    str(@padding.Center(123, width=8, padding=b'*')),
+    content="%**123***%",
+  )
+  inspect(str(@padding.Center(100, width=6, padding=b'-')), content="%-100--%")
+
+  // Test with exact width (no padding needed)
+  inspect(str(@padding.Center(12345, width=5, padding=b' ')), content="%12345%")
+
+  // Test with width smaller than content (no padding)
+  inspect(
+    str(@padding.Center(123456789, width=5, padding=b' ')),
+    content="%123456789%",
+  )
+
+  // Test with single byte
+  inspect(str(@padding.Center(b'X', width=4, padding=b' ')), content="% X  %")
+
+  // Test with zero width
+  inspect(str(@padding.Center(42, width=0, padding=b' ')), content="%42%")
+
+  // Test with different data types
+  inspect(str(@padding.Center(42, width=6, padding=b'0')), content="%004200%")
+  inspect(
+    str(@padding.Center(3.14, width=8, padding=b' ')),
+    content="%  3.14  %",
+  )
+  inspect(
+    str(@padding.Center(-123, width=7, padding=b' ')),
+    content="% -123  %",
+  )
+
+  // Test with bytes content
+  inspect(str(@padding.Center(b"hi", width=5, padding=b'#')), content="%#hi##%")
+
+  // Test with larger padding width
+  inspect(
+    str(@padding.Center(b'X', width=10, padding=b'.')),
+    content="%....X.....%",
+  )
+
+  // Test with UInt type
+  inspect(str(@padding.Center(42U, width=6, padding=b'0')), content="%004200%")
+
+  // Test with negative numbers and different padding
+  inspect(
+    str(@padding.Center(-999, width=8, padding=b'_')),
+    content="%__-999__%",
+  )
+
+  // Test with very small positive number
+  inspect(str(@padding.Center(7, width=5, padding=b'*')), content="%**7**%")
+
+  // Test with bytes view
+  inspect(
+    str(@padding.Center(b"test"[0:2], width=6, padding=b'=')),
+    content="%==te==%",
+  )
+
+  // Test count method for different scenarios
+  inspect(
+    @fmt.Format::count(@padding.Center(123, width=10, padding=b' ')),
+    content="12",
+  )
+  inspect(
+    @fmt.Format::count(@padding.Center(123456789, width=5, padding=b' ')),
+    content="12",
+  )
+  inspect(
+    @fmt.Format::count(@padding.Center(12345, width=5, padding=b' ')),
+    content="12",
+  )
+
+  // Test with tuple (composite type that implements Format)
+  inspect(
+    str(@padding.Center((42, 100), width=12, padding=b' ')),
+    content="% (42,100)%  %",
+  )
+
+  // Test edge case: width of 1 with single digit
+  inspect(str(@padding.Center(5, width=1, padding=b'0')), content="%5%")
+
+  // Test with double precision numbers
+  inspect(str(@padding.Center(1.5, width=6, padding=b'0')), content="%01.500%")
+
+  // Test odd vs even padding distribution
+  inspect(
+    str(@padding.Center(b'A', width=7, padding=b'.')),
+    content="%...A...%",
+  )
+  inspect(str(@padding.Center(b'A', width=6, padding=b'.')), content="%..A...%")
 }
