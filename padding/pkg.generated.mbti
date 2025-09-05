@@ -15,6 +15,11 @@ pub(all) enum Left[T] {
 }
 impl[T : @fmt.Format] @fmt.Format for Left[T]
 
+pub(all) enum Right[T] {
+  Right(T, width~ : Int, padding~ : Byte)
+}
+impl[T : @fmt.Format] @fmt.Format for Right[T]
+
 // Type aliases
 
 // Traits

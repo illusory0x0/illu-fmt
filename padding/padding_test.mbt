@@ -2,9 +2,7 @@
 test "paddint/Left" {
   let buffer = @illusory0x0/fmt.Memory::make(1024, b'%')
   fn str(data : &@illusory0x0/fmt.Format) -> String {
-    for i in 0..<buffer.length() {
-      buffer[i] = b'%'
-    }
+    fill_marker(buffer)
     let count = @illusory0x0/fmt.Format::write(data, buffer, 1)
     memory_to_string(buffer, count + 2)
   }
@@ -97,9 +95,7 @@ test "paddint/Left" {
 test "padding/right" {
   let buffer = @illusory0x0/fmt.Memory::make(1024, b'%')
   fn str(data : &@illusory0x0/fmt.Format) -> String {
-    for i in 0..<buffer.length() {
-      buffer[i] = b'%'
-    }
+    fill_marker(buffer)
     let count = @illusory0x0/fmt.Format::write(data, buffer, 1)
     memory_to_string(buffer, count + 2)
   }

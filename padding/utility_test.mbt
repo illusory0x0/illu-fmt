@@ -18,3 +18,10 @@ fn bytes_view_of_memory(
 ) -> @bytes.View {
   bytes_of_memory(memory)[start:end]
 }
+
+///|
+fn fill_marker(memory : @fmt.Memory) -> Unit {
+  for i in 0..<memory.length() {
+    memory[i] = b'%'
+  }
+}
