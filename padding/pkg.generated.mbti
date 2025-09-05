@@ -1,0 +1,21 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "illusory0x0/fmt/padding"
+
+import(
+  "illusory0x0/fmt"
+)
+
+// Values
+
+// Errors
+
+// Types and methods
+pub(all) enum Left[T] {
+  Left(T, width~ : Int, padding~ : Byte)
+}
+impl[T : @fmt.Format] @fmt.Format for Left[T]
+
+// Type aliases
+
+// Traits
+
