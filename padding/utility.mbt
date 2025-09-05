@@ -1,5 +1,5 @@
 ///|
-fn memory_copy(
+fn memory_copy_forward(
   dst~ : @fmt.Memory,
   dst_start~ : Int,
   src~ : @fmt.Memory,
