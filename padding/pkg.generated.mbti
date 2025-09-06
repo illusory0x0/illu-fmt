@@ -10,6 +10,11 @@ import(
 // Errors
 
 // Types and methods
+pub(all) enum Center[T] {
+  Center(T, width~ : Int, padding~ : Byte)
+}
+impl[T : @fmt.Format] @fmt.Format for Center[T]
+
 pub(all) enum Left[T] {
   Left(T, width~ : Int, padding~ : Byte)
 }
