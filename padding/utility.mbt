@@ -1,3 +1,5 @@
+/// private utility functions for memory manipulation
+
 ///|
 fn memory_copy_forward(
   dst~ : @fmt.Memory,

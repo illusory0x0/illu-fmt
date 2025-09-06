@@ -1,3 +1,5 @@
+/// provides utility functions for black-box testing
+
 ///|
 fn memory_to_string(memory : @fmt.Memory, end : Int) -> String {
   let buf = StringBuilder::new()
