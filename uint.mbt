@@ -21,7 +21,7 @@ pub impl Format for UInt with write(value, buffer, start) {
   let mut offset = start
   while value > 0 {
     let rem = value % 10
-    buffer[offset] = upper_digit_table[rem.reinterpret_as_int()]
+    buffer[offset] = UInt::to_byte(rem + b'0'.to_uint())
     value /= 10
     offset += 1
   }
