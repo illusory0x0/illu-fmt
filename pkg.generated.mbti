@@ -17,6 +17,14 @@ pub(all) struct BigEndian[T](T)
 fn[T] BigEndian::inner(Self[T]) -> T
 impl[T : BigEndianFormat] Format for BigEndian[T]
 
+pub(all) struct HexLower[T](T)
+fn[T] HexLower::inner(Self[T]) -> T
+impl[T : HexLowerFormat] Format for HexLower[T]
+
+pub(all) struct HexUpper[T](T)
+fn[T] HexUpper::inner(Self[T]) -> T
+impl[T : HexUpperFormat] Format for HexUpper[T]
+
 pub(all) struct LittleEndian[T](T)
 fn[T] LittleEndian::inner(Self[T]) -> T
 impl[T : LittleEndianFormat] Format for LittleEndian[T]
@@ -50,6 +58,20 @@ impl[A : Format] Format for Iter[A]
 impl[A : Format, B : Format] Format for Iter2[A, B]
 impl Format for @bytes.View
 impl[A : Format, B : Format] Format for (A, B)
+
+pub(open) trait HexLowerFormat {
+  write(Self, Memory, Int) -> Int
+  count(Self) -> Int
+}
+impl HexLowerFormat for Int
+impl HexLowerFormat for UInt
+
+pub(open) trait HexUpperFormat {
+  write(Self, Memory, Int) -> Int
+  count(Self) -> Int
+}
+impl HexUpperFormat for Int
+impl HexUpperFormat for UInt
 
 pub(open) trait LittleEndianFormat {
   write(Self, Memory, Int) -> Int

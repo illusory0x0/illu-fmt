@@ -37,3 +37,25 @@ pub impl BigEndianFormat for Int with write(value, buffer, start) {
 pub impl BigEndianFormat for Int with count(self) -> Int {
   4
 }
+
+///|
+pub impl HexLowerFormat for Int with write(value, buffer, start) {
+  HexLowerFormat::write(value.reinterpret_as_uint(), buffer, start)
+}
+
+///|
+/// supremum
+pub impl HexLowerFormat for Int with count(self) -> Int {
+  8
+}
+
+///|
+pub impl HexUpperFormat for Int with write(value, buffer, start) {
+  HexUpperFormat::write(value.reinterpret_as_uint(), buffer, start)
+}
+
+///|
+/// supremum
+pub impl HexUpperFormat for Int with count(self) -> Int {
+  8
+}
