@@ -72,3 +72,51 @@ pub impl BigEndianFormat for UInt with write(value, buffer, start) {
 pub impl BigEndianFormat for UInt with count(self) -> Int {
   4
 }
+
+///|
+pub impl HexLowerFormat for UInt with write(value, buffer, start) {
+  if value == 0 {
+    buffer[start + 0] = '0'
+    return 1
+  }
+  let mut value = value
+  let mut offset = start
+  while value > 0 {
+    let rem = value & 0xF
+    buffer[offset] = lower_digit_table[rem.reinterpret_as_int()]
+    value = value >> 4
+    offset += 1
+  }
+  reverse(buffer, start, offset)
+  offset - start
+}
+
+///|
+/// supremum
+pub impl HexLowerFormat for UInt with count(self) -> Int {
+  8
+}
+
+///|
+pub impl HexUpperFormat for UInt with write(value, buffer, start) {
+  if value == 0 {
+    buffer[start + 0] = '0'
+    return 1
+  }
+  let mut value = value
+  let mut offset = start
+  while value > 0 {
+    let rem = value & 0xF
+    buffer[offset] = upper_digit_table[rem.reinterpret_as_int()]
+    value = value >> 4
+    offset += 1
+  }
+  reverse(buffer, start, offset)
+  offset - start
+}
+
+///|
+/// supremum
+pub impl HexUpperFormat for UInt with count(self) -> Int {
+  8
+}
