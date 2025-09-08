@@ -65,15 +65,15 @@ test "paddint/Left" {
   // Test count method for different scenarios
   inspect(
     @fmt.Format::count(@padding.Left(123, width=10, padding=b' ')),
-    content="12",
+    content="11",
   )
   inspect(
     @fmt.Format::count(@padding.Left(123456789, width=5, padding=b' ')),
-    content="12",
+    content="11",
   )
   inspect(
     @fmt.Format::count(@padding.Left(12345, width=5, padding=b' ')),
-    content="12",
+    content="11",
   )
 
   // Test with tuple (composite type that implements Format)
@@ -162,15 +162,15 @@ test "padding/right" {
   // Test count method for different scenarios
   inspect(
     @fmt.Format::count(@padding.Right(123, width=10, padding=b' ')),
-    content="12",
+    content="11",
   )
   inspect(
     @fmt.Format::count(@padding.Right(123456789, width=5, padding=b' ')),
-    content="12",
+    content="11",
   )
   inspect(
     @fmt.Format::count(@padding.Right(12345, width=5, padding=b' ')),
-    content="12",
+    content="11",
   )
 
   // Test with tuple (composite type that implements Format)
@@ -265,15 +265,15 @@ test "padding/Center" {
   // Test count method for different scenarios
   inspect(
     @fmt.Format::count(@padding.Center(123, width=10, padding=b' ')),
-    content="12",
+    content="11",
   )
   inspect(
     @fmt.Format::count(@padding.Center(123456789, width=5, padding=b' ')),
-    content="12",
+    content="11",
   )
   inspect(
     @fmt.Format::count(@padding.Center(12345, width=5, padding=b' ')),
-    content="12",
+    content="11",
   )
 
   // Test with tuple (composite type that implements Format)

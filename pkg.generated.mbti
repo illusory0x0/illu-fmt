@@ -43,7 +43,9 @@ pub(open) trait BigEndianFormat {
   count(Self) -> Int
 }
 impl BigEndianFormat for Int
+impl BigEndianFormat for Int16
 impl BigEndianFormat for UInt
+impl BigEndianFormat for UInt16
 
 pub(open) trait Format {
   write(Self, Memory, Int) -> Int
@@ -51,7 +53,9 @@ pub(open) trait Format {
 }
 impl Format for Byte
 impl Format for Int
+impl Format for Int16
 impl Format for UInt
+impl Format for UInt16
 impl Format for Double
 impl Format for Bytes
 impl[A : Format] Format for Iter[A]
@@ -64,19 +68,25 @@ pub(open) trait HexLowerFormat {
   count(Self) -> Int
 }
 impl HexLowerFormat for Int
+impl HexLowerFormat for Int16
 impl HexLowerFormat for UInt
+impl HexLowerFormat for UInt16
 
 pub(open) trait HexUpperFormat {
   write(Self, Memory, Int) -> Int
   count(Self) -> Int
 }
 impl HexUpperFormat for Int
+impl HexUpperFormat for Int16
 impl HexUpperFormat for UInt
+impl HexUpperFormat for UInt16
 
 pub(open) trait LittleEndianFormat {
   write(Self, Memory, Int) -> Int
   count(Self) -> Int
 }
 impl LittleEndianFormat for Int
+impl LittleEndianFormat for Int16
 impl LittleEndianFormat for UInt
+impl LittleEndianFormat for UInt16
 
