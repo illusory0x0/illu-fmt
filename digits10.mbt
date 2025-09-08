@@ -15,7 +15,7 @@
 /// Since I_Max < pow(2,n), we have:
 /// log₁₀(I_Max) < log₁₀(pow(2,n)) = n * log₁₀(2)
 ///
-/// According to the Squeeze Theorem and the fact that we need integer digit counts:
+/// Using a bounding approach and the fact that we need integer digit counts:
 /// The upper bound of decimal digits for type I is ⌊n * log₁₀(2)⌋ + 1
 /// where the +1 accounts for potential rounding and sign representation.
 ///
