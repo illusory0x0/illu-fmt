@@ -7,7 +7,7 @@ pub impl Format for UInt16 with write(value, buffer, start) {
 ///|
 /// supremum
 pub impl Format for UInt16 with count(self) -> Int {
-  11
+  UInt16_Digits10
 }
 
 ///|
