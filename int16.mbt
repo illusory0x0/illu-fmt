@@ -7,7 +7,7 @@ pub impl Format for Int16 with write(value, buffer, start) {
 ///|
 /// supremum
 pub impl Format for Int16 with count(self) -> Int {
-  12
+  Int16_Digits10
 }
 
 ///|

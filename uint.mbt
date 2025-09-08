@@ -32,7 +32,7 @@ pub impl Format for UInt with write(value, buffer, start) {
 ///|
 /// supremum
 pub impl Format for UInt with count(self) -> Int {
-  11
+  UInt_Digits10
 }
 
 ///|
