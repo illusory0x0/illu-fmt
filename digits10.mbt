@@ -27,7 +27,8 @@
 /// to represent any value of the corresponding integer type.
 ///
 /// https://en.cppreference.com/w/cpp/types/numeric_limits/digits10.html
-/// 
+///
+
 ///|
 /// Maximum decimal digits for UInt8/Byte: 2^8 - 1 = 255 (3 digits)
 /// Theoretical: ⌊8 * 0.30103⌋ + 1 = ⌊2.408⌋ + 1 = 3 ✓
