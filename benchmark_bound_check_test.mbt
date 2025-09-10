@@ -11,6 +11,12 @@ test (b : @bench.T) {
     }
     core_buffer.reset()
   })
+  b.bench(name="write_uint_text_with_temp", fn() {
+    for _ in 0..<400 {
+      write_uint_text_with_temp(data, core_buffer)
+    }
+    core_buffer.reset()
+  })
   b.bench(name="Format::write", fn() {
     let mut offset = 0
     for _ in 0..<400 {
@@ -38,6 +44,17 @@ fn write_uint_text(
   temp : FixedArray[Byte],
 ) -> Unit {
   let mut value = num
+  for i = 9, value = num; i >= 0 && value > 0; i = i - 1, value = value / 10 {
+    temp[i] = (value % 10 + '0'.to_uint()).to_byte()
+  } else {
+    buffer.write_bytesview(temp.unsafe_reinterpret_as_bytes()[i + 1:])
+  }
+}
+
+///|
+fn write_uint_text_with_temp(num : UInt, buffer : @buffer.Buffer) -> Unit {
+  let mut value = num
+  let temp = FixedArray::make(10, b'\x00')
   for i = 9, value = num; i >= 0 && value > 0; i = i - 1, value = value / 10 {
     temp[i] = (value % 10 + '0'.to_uint()).to_byte()
   } else {
