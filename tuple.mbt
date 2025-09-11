@@ -10,7 +10,7 @@ pub impl[A : Format, B : Format] Format for (A, B) with write(
   offset += Format::write(b',', buffer, offset)
   offset += Format::write(value.1, buffer, offset)
   offset += Format::write(b')', buffer, offset)
-  offset
+  offset - start
 }
 
 ///|
