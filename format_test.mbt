@@ -81,6 +81,9 @@ test "Iter" {
   inspect(memory_to_string(buffer, offset), content="[1,2,3]")
   let offset = @fmt.Format::write([1.23, 2.34, 3.45].iter(), buffer, 0)
   inspect(memory_to_string(buffer, offset), content="[1.23,2.34,3.45]")
+  let map : Map[Bytes, Double] = { "pi": 3.14, "e": 2.71 }
+  let offset = @fmt.Format::write(map.iter(), buffer, 0)
+  inspect(memory_to_string(buffer, offset), content="[(pi,3.14),(e,2.71)]")
 }
 
 ///|
