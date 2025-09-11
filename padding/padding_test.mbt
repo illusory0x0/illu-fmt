@@ -79,7 +79,7 @@ test "paddint/Left" {
   // Test with tuple (composite type that implements Format)
   inspect(
     str(@padding.Left((42, 100), width=12, padding=b' ')),
-    content="%   (42,100)%%",
+    content="%    (42,100)%",
   )
 
   // Test edge case: width of 1 with single digit
@@ -176,7 +176,7 @@ test "padding/right" {
   // Test with tuple (composite type that implements Format)
   inspect(
     str(@padding.Right((42, 100), width=12, padding=b' ')),
-    content="%(42,100)%   %",
+    content="%(42,100)    %",
   )
 
   // Test edge case: width of 1 with single digit
@@ -279,7 +279,7 @@ test "padding/Center" {
   // Test with tuple (composite type that implements Format)
   inspect(
     str(@padding.Center((42, 100), width=12, padding=b' ')),
-    content="% (42,100)%  %",
+    content="%  (42,100)  %",
   )
 
   // Test edge case: width of 1 with single digit
