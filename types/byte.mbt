@@ -6,6 +6,6 @@ pub impl Format for Byte with write(value, buffer, start) {
 
 ///|
 /// supremum
-pub impl Format for Byte with count(self) -> Int {
+pub impl Format for Byte with count(_) -> Int {
   1
 }

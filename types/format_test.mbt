@@ -289,6 +289,51 @@ test "format_write format dsl error" {
 }
 
 ///|
+test "format_count" {
+  // Test format strings without placeholders
+  inspect(@fmt.format_count(b"hello world", []), content="11")
+  inspect(@fmt.format_count(b"", []), content="0")
+
+  // Test format strings with single placeholder
+  inspect(@fmt.format_count(b"Hello {}", [42]), content="17") // "Hello " (6) + up to 11 digits for Int + "" (0)
+  inspect(@fmt.format_count(b"Value: {}", [123]), content="18") // "Value: " (7) + up to 11 digits for Int + "" (0)
+
+  // Test format strings with multiple placeholders
+  inspect(@fmt.format_count(b"{} + {} = {}", [1, 2, 3]), content="39") // "" (0) + 11 + " + " (3) + 11 + " = " (3) + 11 + "" (0)
+  inspect(@fmt.format_count(b"{}={}", [100, 200]), content="23") // "" (0) + 11 + "=" (1) + 11 + "" (0)
+
+  // Test with different format types
+  inspect(@fmt.format_count(b"Double: {}", [3.14]), content="33") // "Double: " (8) + 25 (max digits for Double) + "" (0)
+  inspect(@fmt.format_count(b"Hex: {}", [@fmt.HexUpper(0xFF)]), content="13") // "Hex: " (5) + 8 (max hex digits for Int) + "" (0)
+  inspect(@fmt.format_count(b"BE: {}", [@fmt.BigEndian(0x1234)]), content="8") // "BE: " (4) + 4 (bytes for BigEndian Int) + "" (0)
+
+  // Test with bytes and byte views
+  inspect(@fmt.format_count(b"Data: {}", [b"test"]), content="10") // "Data: " (6) + 4 (length of "test") + "" (0)
+
+  // Test error cases - mismatched placeholder count
+  inspect(
+    try? @fmt.format_count(b"Hello {} world", []),
+    content=(
+      #|Err(DebugError("data.length() mismatch with placeholder's count"))
+    ),
+  )
+  inspect(
+    try? @fmt.format_count(b"Hello {} world", [1, 2]),
+    content=(
+      #|Err(DebugError("data.length() mismatch with placeholder's count"))
+    ),
+  )
+
+  // Verify format_count provides upper bound for actual format_write
+  let buffer = @fmt.Memory::make(1024, Byte::default())
+  let fmt = b"Test: {} and {}"
+  let data : Array[&@fmt.Format] = [42, 3.14]
+  let count_bound = try! @fmt.format_count(fmt, data)
+  let actual_written = try! @fmt.format_write(fmt, data, buffer, 0)
+  inspect(actual_written <= count_bound, content="true")
+}
+
+///|
 test "BigEndian Int" {
   let buffer = @fmt.Memory::make(1024, Byte::default())
   let offset = @fmt.Format::write(@fmt.BigEndian(0x12345678), buffer, 0)

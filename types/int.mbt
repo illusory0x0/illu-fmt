@@ -12,7 +12,7 @@ pub impl Format for Int with write(value, buffer, start) {
 
 ///|
 /// supremum
-pub impl Format for Int with count(self) -> Int {
+pub impl Format for Int with count(_) -> Int {
   Int_Digits10
 }
 
@@ -23,7 +23,7 @@ pub impl LittleEndianFormat for Int with write(value, buffer, start) {
 
 ///|
 /// supremum
-pub impl LittleEndianFormat for Int with count(self) -> Int {
+pub impl LittleEndianFormat for Int with count(_) -> Int {
   4
 }
 
@@ -34,7 +34,7 @@ pub impl BigEndianFormat for Int with write(value, buffer, start) {
 
 ///|
 /// supremum
-pub impl BigEndianFormat for Int with count(self) -> Int {
+pub impl BigEndianFormat for Int with count(_) -> Int {
   4
 }
 
@@ -45,7 +45,7 @@ pub impl HexLowerFormat for Int with write(value, buffer, start) {
 
 ///|
 /// supremum
-pub impl HexLowerFormat for Int with count(self) -> Int {
+pub impl HexLowerFormat for Int with count(_) -> Int {
   8
 }
 
@@ -56,6 +56,6 @@ pub impl HexUpperFormat for Int with write(value, buffer, start) {
 
 ///|
 /// supremum
-pub impl HexUpperFormat for Int with count(self) -> Int {
+pub impl HexUpperFormat for Int with count(_) -> Int {
   8
 }

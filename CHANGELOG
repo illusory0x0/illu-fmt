@@ -1,0 +1,21 @@
+# 0.4.0
+
+## breaking changes: 
+
+move `illusory0x0/fmt` definitions to `illusory0x0/fmt/types`.
+
+export API in `prelude.mbt` in `illusory0x0/fmt`, but some enum variants constructor can not be re-exported.
+
+you should use helper function. 
+
+e.g. `@fmt.BigEndian` is type and enum variants constructor, but you now should use `@fmt.big_endian` function.
+
+## features: 
+
+add `@fmt.format_count`,
+
+export `@fmt.write` and `@fmt.count` from ``@fmt.Format`` trait.
+
+## LLM Agent guide 
+
+Agent should learn API from `README.mbt.md` and `./types/pkg.generated.mbti` and `pkg.generated.mbti`. 

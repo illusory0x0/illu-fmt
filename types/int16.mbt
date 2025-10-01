@@ -6,7 +6,7 @@ pub impl Format for Int16 with write(value, buffer, start) {
 
 ///|
 /// supremum
-pub impl Format for Int16 with count(self) -> Int {
+pub impl Format for Int16 with count(_) -> Int {
   Int16_Digits10
 }
 
@@ -21,7 +21,7 @@ pub impl LittleEndianFormat for Int16 with write(value, buffer, start) {
 
 ///|
 /// supremum
-pub impl LittleEndianFormat for Int16 with count(self) -> Int {
+pub impl LittleEndianFormat for Int16 with count(_) -> Int {
   2
 }
 
@@ -36,7 +36,7 @@ pub impl BigEndianFormat for Int16 with write(value, buffer, start) {
 
 ///|
 /// supremum
-pub impl BigEndianFormat for Int16 with count(self) -> Int {
+pub impl BigEndianFormat for Int16 with count(_) -> Int {
   2
 }
 
@@ -48,7 +48,7 @@ pub impl HexLowerFormat for Int16 with write(value, buffer, start) {
 
 ///|
 /// supremum
-pub impl HexLowerFormat for Int16 with count(self) -> Int {
+pub impl HexLowerFormat for Int16 with count(_) -> Int {
   4
 }
 
@@ -60,6 +60,6 @@ pub impl HexUpperFormat for Int16 with write(value, buffer, start) {
 
 ///|
 /// supremum
-pub impl HexUpperFormat for Int16 with count(self) -> Int {
+pub impl HexUpperFormat for Int16 with count(_) -> Int {
   4
 }

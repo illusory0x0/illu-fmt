@@ -31,7 +31,7 @@ pub impl Format for UInt with write(value, buffer, start) {
 
 ///|
 /// supremum
-pub impl Format for UInt with count(self) -> Int {
+pub impl Format for UInt with count(_) -> Int {
   UInt_Digits10
 }
 
@@ -50,7 +50,7 @@ pub impl LittleEndianFormat for UInt with write(value, buffer, start) {
 
 ///|
 /// supremum
-pub impl LittleEndianFormat for UInt with count(self) -> Int {
+pub impl LittleEndianFormat for UInt with count(_) -> Int {
   4
 }
 
@@ -69,7 +69,7 @@ pub impl BigEndianFormat for UInt with write(value, buffer, start) {
 
 ///|
 /// supremum
-pub impl BigEndianFormat for UInt with count(self) -> Int {
+pub impl BigEndianFormat for UInt with count(_) -> Int {
   4
 }
 
@@ -93,7 +93,7 @@ pub impl HexLowerFormat for UInt with write(value, buffer, start) {
 
 ///|
 /// supremum
-pub impl HexLowerFormat for UInt with count(self) -> Int {
+pub impl HexLowerFormat for UInt with count(_) -> Int {
   8
 }
 
@@ -117,6 +117,6 @@ pub impl HexUpperFormat for UInt with write(value, buffer, start) {
 
 ///|
 /// supremum
-pub impl HexUpperFormat for UInt with count(self) -> Int {
+pub impl HexUpperFormat for UInt with count(_) -> Int {
   8
 }

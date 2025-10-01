@@ -16,7 +16,7 @@ pub impl Format for Double with write(value, buffer, start) {
 
 ///|
 /// upper bound
-pub impl Format for Double with count(self) -> Int {
+pub impl Format for Double with count(_) -> Int {
   /// https://en.cppreference.com/w/cpp/types/numeric_limits/max_digits10.html
   25
 }
