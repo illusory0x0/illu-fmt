@@ -117,3 +117,24 @@ test "mathematical proof validation" {
   inspect(int16_theoretical, content="6")
   inspect(Int16_Digits10 <= int16_theoretical, content="true")
 }
+
+///|
+fn init {
+  // Prevent unused constant warnings
+  ignore([
+    Byte_Digits10,
+    UInt16_Digits10,
+    Int16_Digits10,
+    UInt_Digits10,
+    Int_Digits10,
+    UInt64_Digits10,
+    Int64_Digits10,
+    Byte_Digits,
+    UInt16_Digits,
+    Int16_Digits,
+    UInt_Digits,
+    Int_Digits,
+    Int64_Digits,
+    UInt64_Digits,
+  ])
+}

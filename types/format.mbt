@@ -13,8 +13,8 @@ pub(open) trait Format {
 ///|
 fn find_first_placeholder(format : Bytes) -> Int? {
   loop (0, format[:]) {
-    (index, []) => None
-    (index, ['{', '}', .. cs]) => Some(index)
+    (_, []) => None
+    (index, ['{', '}', ..]) => Some(index)
     (index, [_, .. cs]) => continue (index + 1, cs)
   }
 }
@@ -82,4 +82,32 @@ pub fn format_write(
 }
 
 ///|
-suberror DebugError String derive(Show)
+/// Returns the upper bound on the number of bytes that `format_write` would write.
+///
+/// Use this function to determine buffer size before calling `format_write` with 
+/// the same arguments. The actual bytes written by `format_write` will never 
+/// exceed this count.
+pub fn format_count(format : Bytes, data : Array[&Format]) -> Int raise {
+  match find_first_placeholder(format) {
+    None => {
+      guard data.length() == 0 else {
+        raise DebugError("data.length() mismatch with placeholder's count")
+      }
+      format.length()
+    }
+    Some(prefix_fst_end) => {
+      let prefix = format[0:prefix_fst_end]
+      let rest = format[prefix_fst_end + 2:]
+      let (snippets, count) = split_format(rest)
+      guard data.length() == count else {
+        raise DebugError("data.length() mismatch with placeholder's count")
+      }
+      let snippets_total = snippets.fold(init=0, (acc, x) => acc + x.length())
+      let data_total = data.fold(init=0, (acc, x) => acc + x.count())
+      prefix.length() + snippets_total + data_total
+    }
+  }
+}
+
+///|
+priv suberror DebugError String derive(Show)

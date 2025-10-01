@@ -2,7 +2,7 @@
 package "illusory0x0/fmt/padding"
 
 import(
-  "illusory0x0/fmt"
+  "illusory0x0/fmt/types"
 )
 
 // Values
@@ -13,17 +13,17 @@ import(
 pub(all) enum Center[T] {
   Center(T, width~ : Int, padding~ : Byte)
 }
-impl[T : @fmt.Format] @fmt.Format for Center[T]
+impl[T : @types.Format] @types.Format for Center[T]
 
 pub(all) enum Left[T] {
   Left(T, width~ : Int, padding~ : Byte)
 }
-impl[T : @fmt.Format] @fmt.Format for Left[T]
+impl[T : @types.Format] @types.Format for Left[T]
 
 pub(all) enum Right[T] {
   Right(T, width~ : Int, padding~ : Byte)
 }
-impl[T : @fmt.Format] @fmt.Format for Right[T]
+impl[T : @types.Format] @types.Format for Right[T]
 
 // Type aliases
 
